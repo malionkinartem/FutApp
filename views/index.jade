@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  div
+      form#formAddUser(name="login", method="post", action="login")
+        input#intPassCode(type="text", placeholder="loginpasscode", name="passcode")
+        button#btnSubmit(type="submit") login
+
+
+        h1 Credits #{credits}
+      form#getCredits(name="credits", method="post", action="getCredits")
+        button#btnSubmit(type="submit") get credits
+
+      
+      h1 Find Player 
+      form#getCredits(name="player", method="post", action="getPlayer")
+        button#btnSubmit(type="submit") get player
