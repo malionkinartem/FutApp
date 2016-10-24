@@ -43,9 +43,16 @@ futservice.getCredits = function(callback){
 }
 
 futservice.findplayer = function(callback){
+    var self = this;
     this.futClient.search({
-        type: "player", lev: "gold", maxb: "700", leag: "13" }, function(error, response){ 
+        type: "player", lev: "gold", maxb: "350", leag: "13" }, function(error, response){ 
             var responseK = response;
+
+            response.auctionInfo.forEach(function(item) {
+                self.futClient.placeBid(item.tradeId, 350, function(error, response){ 
+                    var responseK = response;
+                });
+            }, this);
 
             // if(response.auc)
         });
