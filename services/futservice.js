@@ -16,7 +16,7 @@ futservice.requestLogin = function(code){
 
 //malionkin.artem89@gmail.com
 //artemochka2007@mail.ru
-      this.futClient.login("malionkin.artem89@gmail.com","Cool1989","gerrard", "ps4",
+      this.futClient.login("artemochka2007@mail.ru","Cool1989","gerrard", "ps4",
     	twoFactorCodeCb,
     	function(error,response){
             if(error) {
@@ -42,20 +42,58 @@ futservice.getCredits = function(callback){
     });
 }
 
-futservice.findplayer = function(callback){
+futservice.findplayer = function(data, callback){
+    // maskedDefId = assetId  is player id
+
+    var options = {
+        type: "player", 
+        leag: data.league,
+        lev: data.level, 
+        maskedDefId: data.playerid, 
+        maxb: data.maxbuy, 
+        micr: data.minprice,
+        macr: data.maxprice,
+        pos: data.position
+    };
+
     var self = this;
-    this.futClient.search({
-        type: "player", lev: "gold", maxb: "350", leag: "13" }, function(error, response){ 
+    this.futClient.search(options, function(error, response){ 
             var responseK = response;
 
-            response.auctionInfo.forEach(function(item) {
-                self.futClient.placeBid(item.tradeId, 350, function(error, response){ 
-                    var responseK = response;
-                });
-            }, this);
+            if(response.code == '460'){
+                callback();
+                return;
+            }
 
-            // if(response.auc)
+            console.log('players count: ' + response.auctionInfo.length);
+
+            if(response.auctionInfo !== undefined){
+                var item = response.auctionInfo[0];
+
+                if(item !== undefined)
+                {
+
+                    console.log('Current bid: '+ item.currentBid);
+            // response.auctionInfo.forEach(function(item) {
+                    // self.futClient.placeBid(item.tradeId, data.maxbuy, function(error, response){ 
+                    //     var responseK = response;
+                    // });
+            // }, this);
+
+                }
+            }
+
+            callback();
         });
+}
+
+futservice.getWatchList = function(callback){
+    this.futClient.getWatchlist(function(error, response){ 
+        callback(response);
+    });
+}
+
+module.exports = futservice;
 
     // this.futClient.getTradepile(function(error, response){ 
     //     var responseK = response;
@@ -64,6 +102,3 @@ futservice.findplayer = function(callback){
     // this.futClient.getWatchlist(function(error, response){ 
     //     var responseK = response;
     // });
-}
-
-module.exports = futservice;
