@@ -87,9 +87,6 @@ futservice.findplayer = function (data, callback) {
 
         callback();
     });
-
-    callback();
-    console.log('player found');
 }
 
 futservice.getWatchList = function (callback) {
