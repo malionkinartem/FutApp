@@ -12,8 +12,8 @@ block content
       //-   button#btnSubmit(type="submit") get credits
 
       section
-        h1 Find Player 
-        form#getCredits(name="player", method="post", action="getPlayer")
+        h1 Process Players
+        form#getCredits(name="player", method="post", action="processcriteria")
           div
             input#playerid(type="text", placeholder="player id", name="playerid" value=playerid)
           div
@@ -22,6 +22,10 @@ block content
             input#maxbuyprice(type="text", placeholder="max buy price", name="maxbuy" value=maxbuy)
 
           div
+            div
+              input(type="checkbox" value=isRare)
+              label Is Rare
+
             select(name="level")
               - repeation = [ 'gold', 'silver', 'bronze', 'special']
               option(value='') Any
@@ -38,7 +42,8 @@ block content
               option(value='') Any
               each item in repeation
                 option(value=item) #{item}
-
+            
+            
 
 
           button#btnSubmit(type="submit") get player
