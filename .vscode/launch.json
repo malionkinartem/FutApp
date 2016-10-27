@@ -40,7 +40,8 @@
             "processId": "${command.PickProcess}",
             "port": 5858,
             "sourceMaps": false,
-            "outFiles": []
+            "outFiles": [],
+            "restart": true
         }
     ]
 }
