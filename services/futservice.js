@@ -17,7 +17,8 @@ futservice.requestLogin = function (code) {
 
     //malionkin.artem89@gmail.com
     //artemochka2007@mail.ru
-    this.futClient.login("artemochka2007@mail.ru", "Cool1989", "gerrard", "ps4",
+    //coinsup87@bk.ru
+    this.futClient.login("coinsup87@bk.ru", "Asdfg99Asdfg", "gerrard", "ps4",
         twoFactorCodeCb,
         function (error, response) {
             if (error) {
@@ -75,7 +76,7 @@ futservice.findplayer = function (data, callback) {
 
                 console.log('Current bid: ' + item.currentBid);
                 response.auctionInfo.forEach(function (item) {
-                    self.futClient.placeBid(item.tradeId, data.maxbuy, function (error, response) {
+                    self.futClient.placeBid(item.tradeId, item.buyNowPrice, function (error, response) {
                         if(error == null){
                             console.log('player was bought.')
                         }
@@ -90,9 +91,9 @@ futservice.findplayer = function (data, callback) {
 }
 
 futservice.getWatchList = function (callback) {
-    // this.futClient.getWatchlist(function(error, response){ 
-    //     callback(response);
-    // });
+    this.futClient.getWatchlist(function(error, response){ 
+        callback(response);
+    });
 
     this.continueProcess = false;
     callback();
@@ -101,12 +102,18 @@ futservice.getWatchList = function (callback) {
 
 futservice.processcriteria = function (data) {
     var self = this;
+    var callsCount = 0;
     var callback = function () {
+        var timeout = Math.floor((Math.random() * 5) + 1);
+
+
         setTimeout(function () {
-            if (self.continueProcess) {
+            if (callsCount == 100) {
                 self.findplayer(data, callback);
             }
-        }, 1000);
+        }, timeout);
+
+        callsCount++;
     }
     self.findplayer(data, callback);
 }
