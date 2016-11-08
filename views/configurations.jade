@@ -1,0 +1,85 @@
+extends layout
+
+block content
+    div
+        div
+            h1 Configuration list
+            div(class="table")
+                div(class="header")
+                    div
+                        span Player Id
+                    div
+                        span Min price
+                    div 
+                        span Max price
+                    div
+                        span Max buy price
+                    div
+                        span Is rare
+                    div
+                        span Level
+                    div 
+                        span League
+                    div 
+                        span Team
+                    div
+                        span Position
+
+                each item in configurations
+                    div(class="body")
+                        div
+                            span item.playerid
+                        div
+                            span item.minprice
+                        div 
+                            span item.maxprice
+                        div
+                            span item.maxbuy
+                        div
+                            span item.isRare
+                        div
+                            span item.level
+                        div 
+                            span item.league
+                        div 
+                            span item.teamid
+                        div
+                            span item.position
+            
+            
+        div
+            h1 Add Configuration
+
+            form#addConfiguration(action="configurations/add", method="post")
+                div
+                    input#playerid(type="text", placeholder="player id", name="playerid" value=playerid)
+                div
+                    input#minprice(type="text", placeholder="min price", name="minprice" value=minprice)
+                    input#maxprice(type="text", placeholder="max price", name="maxprice" value=maxprice)
+                    input#maxbuyprice(type="text", placeholder="max buy price", name="maxbuy" value=maxbuy)
+
+                div
+                    div
+                    input(type="checkbox" value=isRare)
+                    label Is Rare
+
+                    select(name="level")
+                        - repeation = [ 'gold', 'silver', 'bronze', 'special']
+                        option(value='') Any
+                        each item in repeation
+                            option(value=item) #{item}
+
+                    select(name="league")
+                        - repeation = [ {text: 'Any', value: ''}, {text: 'Premier League', value: '13'}, {text: 'Bundesliga', value: '19'}]
+                        each item in repeation
+                            option(value=item.value) #{item.text}
+
+                    input#teamId(type="text", placeholder="team id", name="teamid")
+
+                    select(name="position")
+                        - repeation = [ 'Defenders', 'Midfielders', 'Attackers', 'GK', 'RWB', 'RB', 'CB', 'LB', 'LWB', 'CDM', 'RM', 'CM', 'LM', 'CAM', 'RF', 'CF', 'LF', 'ST', 'RW', 'LW'], 
+                        option(value='') Any
+                        each item in repeation
+                            option(value=item) #{item}
+
+                button#addNewConfiguration(type="submit") Add New Configuration
