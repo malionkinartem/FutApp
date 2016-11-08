@@ -2,6 +2,32 @@ var express = require('express');
 var fut = require('fut-api');
 var router = express.Router();
 var futService = require('../services/futservice');
+// var mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost:27017');
+
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   // we're connected!
+
+//   var kittySchema = mongoose.Schema({
+//     name: String
+//   });
+
+//   var Kitten = mongoose.model('Kitten', kittySchema);
+
+//   var fluffy = new Kitten({ name: 'fluffy' });
+
+//   fluffy.save(function (err, fluffy) {
+//   if (err) return console.error(err);
+
+//   });
+
+//   Kitten.find(function (err, kittens) {
+//   if (err) return console.error(err);
+//     console.log(kittens);
+//   })
+// });
 
 router.get('/', function (req, res) {
   // futService.requestLogin();
