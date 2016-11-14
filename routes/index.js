@@ -83,7 +83,9 @@ router.post('/processcriteria', function (req, res) {
     league: req.body.league,
     playerid: req.body.playerid,
     position: req.body.position,
-    isRare: req.body.isRare ? 'CR' : ''
+    isRare: req.body.isRare ? 'CR' : '',
+    teamid: req.body.teamid,
+    zone: req.body.zone
   };
 
   futService.processcriteria(data);

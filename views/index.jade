@@ -23,7 +23,7 @@ block content
 
           div
             div
-              input(type="checkbox" value=isRare)
+              input#isRare(type="checkbox", value=isRare, name="isRare")
               label Is Rare
 
             select(name="level")
@@ -33,15 +33,23 @@ block content
                 option(value=item) #{item}
 
             select(name="league")
-              - repeation = [ {text: 'Any', value: ''}, {text: 'Premier League', value: '13'}, {text: 'Bundesliga', value: '19'}, {text: 'Calcio A', value: '31'}]
+              - repeation = [ {text: 'Any', value: ''}, {text: 'Premier League', value: '13'}, {text: 'Bundesliga', value: '19'}, {text: 'Calcio A', value: '31'}, {text: "Pro League", value: '4'}, {text: 'League 1', value: '16'}]
               each item in repeation
                 option(value=item.value) #{item.text}
+            
+            input#teamid(type="text", placeholder="team id", name="teamid" value=teamid)
 
             select(name="position")
               - repeation = [ 'Defenders', 'Midfielders', 'Attackers', 'GK', 'RWB', 'RB', 'CB', 'LB', 'LWB', 'CDM', 'RM', 'CM', 'LM', 'CAM', 'RF', 'CF', 'LF', 'ST', 'RW', 'LW'], 
               option(value='') Any
               each item in repeation
                 option(value=item) #{item}
+
+             select(name="zone")
+              - repeation = [ 'defence', 'midfield', 'attacker'], 
+              option(value='') Any
+              each item in repeation
+                option(value=item) #{item}    
             
             
 

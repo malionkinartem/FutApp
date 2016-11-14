@@ -47,6 +47,8 @@ futservice.getCredits = function (callback) {
 futservice.findplayer = function (data, callback) {
     // maskedDefId = assetId  is player id
 
+    data.maxprice = fut.calculateNextLowerPrice(data.maxprice);
+
     var options = {
         type: "player",
         leag: data.league,
@@ -55,34 +57,42 @@ futservice.findplayer = function (data, callback) {
         maxb: data.maxbuy,
         micr: data.minprice,
         macr: data.maxprice,
-        pos: data.position
+        pos: data.position,
+        team: data.teamid,
+        zone: data.zone
     };
 
     var self = this;
     this.futClient.search(options, function (error, response) {
         var responseK = response;
 
-        if (response.code == '460') {
+        if (response.code == '460' || response.auctionInfo == undefined ) {
+            self.callsCount = 101;
+            console.log("exception " + response.code);
             callback();
             return;
         }
 
-        console.log('players count: ' + response.auctionInfo.length);
+        console.log('players count: ' + response.auctionInfo.length + ". " + new Date().toTimeString());
 
         if (response.auctionInfo !== undefined) {
-            var item = response.auctionInfo[0];
+
+            var item = response.auctionInfo.find(function(item){ return item.itemData.preferredPosition != "GK"});
 
             if (item !== undefined) {
 
                 console.log('Current bid: ' + item.currentBid);
-                response.auctionInfo.forEach(function (item) {
-                    self.futClient.placeBid(item.tradeId, item.buyNowPrice, function (error, response) {
-                        if(error == null){
-                            console.log('player was bought.')
-                        }
-                    });
-                }, this);
+                var item = response.auctionInfo[0];
+                self.futClient.placeBid(item.tradeId, item.buyNowPrice, function (error, response) {
+                    if(error == null){
+                        console.log('player was bought for: ' + item.buyNowPrice);
+                        console.log('coins: ' + response.credits);
+                    }
 
+                    if(response.credits < 1000){
+                        self.callsCount = 101;
+                    }
+                });
             }
         }
 
@@ -101,19 +111,22 @@ futservice.getWatchList = function (callback) {
 }
 
 futservice.processcriteria = function (data) {
-    var self = this;
-    var callsCount = 0;
+    var self = this;    
+    this.callsCount = 0;
     var callback = function () {
-        var timeout = Math.floor((Math.random() * 5) + 1);
+        var timeout = Math.floor((Math.random() * 5000) + 1000);
 
 
         setTimeout(function () {
-            if (callsCount == 100) {
+            if (self.callsCount <= 100) {
                 self.findplayer(data, callback);
+            }
+            else{
+                console.log('processing finished.')
             }
         }, timeout);
 
-        callsCount++;
+        this.callsCount++;
     }
     self.findplayer(data, callback);
 }
