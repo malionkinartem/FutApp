@@ -18,7 +18,7 @@ futservice.requestLogin = function (code) {
     //malionkin.artem89@gmail.com
     //artemochka2007@mail.ru
     //coinsup87@bk.ru
-    this.futClient.login("coinsup87@bk.ru", "Asdfg99Asdfg", "gerrard", "ps4",
+    this.futClient.login("", "", "", "",
         twoFactorCodeCb,
         function (error, response) {
             if (error) {
