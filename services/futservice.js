@@ -82,7 +82,6 @@ futservice.findplayer = function (data, callback) {
             if (item !== undefined) {
 
                 console.log('Current bid: ' + item.currentBid);
-                var item = response.auctionInfo[0];
                 self.futClient.placeBid(item.tradeId, item.buyNowPrice, function (error, response) {
                     if(error == null){
                         console.log('player was bought for: ' + item.buyNowPrice);
@@ -126,7 +125,7 @@ futservice.processcriteria = function (data) {
             }
         }, timeout);
 
-        this.callsCount++;
+        self.callsCount++;
     }
     self.findplayer(data, callback);
 }
