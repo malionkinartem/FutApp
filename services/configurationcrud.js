@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017');
+// mongoose.connect('mongodb://localhost:27017');
+mongoose.connect('mongodb://malonkinartem:Cool1989@ds033607.mlab.com:33607/fut-app');
+
 var db = mongoose.connection;
 
 function ConfigurationCrud() {
@@ -12,7 +14,8 @@ function ConfigurationCrud() {
         league: String,
         teamid: String,
         position: String,
-        isRare: Boolean
+        isRare: Boolean,
+        zone: String
     });
 
     this.saveConfiguration = function(data, callback){
@@ -27,7 +30,8 @@ function ConfigurationCrud() {
                 league: data.league,
                 teamid: data.teamid,
                 position: data.position,
-                maxbuy: data.maxbuy
+                maxbuy: data.maxbuy,
+                zone: data.zone
             }
         );
 
@@ -42,7 +46,14 @@ function ConfigurationCrud() {
         var Configuration = mongoose.model('Configuration', this.configurationSchema);
 
         Configuration.find(function (err, configurations) {
-            return callback(configurations);
+
+            var dataCollection = new Array();
+
+            configurations.forEach(function(item){
+                dataCollection.push(item._doc);
+            })
+
+            return callback(dataCollection);
         })
     }
 }
