@@ -24,9 +24,15 @@ router.get('/contact', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
-  var passCode = req.body.passcode;
 
-  futService.requestLogin(passCode);
+  var data = {
+    passcode: req.body.passcode,
+    userlogin: req.body.userLogin,
+    userpassword: req.body.userPassword,
+    userkeyword: req.body.userKeyword    
+  };
+
+  futService.requestLogin(data);
 
   res.render('index', {
     title: 'Home'

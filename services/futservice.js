@@ -7,18 +7,15 @@ function FutService() {
 
 var futservice = new FutService();
 
-futservice.requestLogin = function (code) {
+futservice.requestLogin = function (data) {
     var self = this;
-    this.LoginCode = code;
+    this.LoginCode = data.passcode;
 
     function twoFactorCodeCb(next) {
         next(self.LoginCode);
     }
 
-    //malionkin.artem89@gmail.com
-    //artemochka2007@mail.ru
-    //coinsup87@bk.ru
-    this.futClient.login("", "", "", "",
+    this.futClient.login(data.userlogin, data.userpassword, data.userkeyword, "ps4",
         twoFactorCodeCb,
         function (error, response) {
             if (error) {

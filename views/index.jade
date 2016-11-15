@@ -3,7 +3,11 @@ extends layout
 block content
   div
       form#formAddUser(name="login", method="post", action="login")
+        input#userLogin(name="userLogin", placeholder="user login", type="text")
+        input#userPassword(name="userPassword", placeholder="user password", type="text")
+        input#userKeyword(name="userKeyword", placeholder="user keyword", type="text")        
         input#intPassCode(type="text", placeholder="login pass code", name="passcode")
+
         button#btnSubmit(type="submit") login
 
 
