@@ -26,7 +26,8 @@ router.post('/add', function(req, res) {
     playerid: req.body.playerid,
     position: req.body.position,
     isRare: req.body.isRare ? 'CR' : '',
-    teamId: req.body.teamid
+    teamId: req.body.teamid,
+    zone: req.body.zone
   };
 
   configurationCrudService.add(data, function(){

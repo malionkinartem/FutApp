@@ -4,48 +4,47 @@ block content
     div
         div
             h1 Configuration list
-            div(class="table")
-                div(class="header")
-                    div
+            div(class="container")
+                div(class="row")
+                    div(class="col-xs-1")
                         span Player Id
-                    div
+                    div(class="col-xs-1")
                         span Min price
-                    div 
+                    div(class="col-xs-1")
                         span Max price
-                    div
+                    div(class="col-xs-2")
                         span Max buy price
-                    div
+                    div(class="col-xs-1")
                         span Is rare
-                    div
+                    div(class="col-xs-1")
                         span Level
-                    div 
+                    div(class="col-xs-1") 
                         span League
-                    div 
+                    div(class="col-xs-1")
                         span Team
-                    div
+                    div(class="col-xs-1")
                         span Position
 
                 each item in configurations
-                    div(class="body")
-                        div
-                            span item.playerid
-                        div
-                            span item.minprice
-                        div 
-                            span item.maxprice
-                        div
-                            span item.maxbuy
-                        div
-                            span item.isRare
-                        div
-                            span item.level
-                        div 
-                            span item.league
-                        div 
-                            span item.teamid
-                        div
-                            span item.position
-            
+                    div(class="row")
+                        div(class="col-xs-1")
+                            span #{item.playerid}
+                        div(class="col-xs-1")
+                            span #{item.minprice}
+                        div(class="col-xs-1")
+                            span #{item.maxprice}
+                        div(class="col-xs-2")
+                            span #{item.maxbuy}
+                        div(class="col-xs-1")
+                            span #{item.isRare}
+                        div(class="col-xs-1")
+                            span #{item.level}
+                        div(class="col-xs-1")
+                            span #{item.league}
+                        div(class="col-xs-1")
+                            span #{item.teamid}
+                        div(class="col-xs-1")
+                            span #{item.position}            
             
         div
             h1 Add Configuration
@@ -77,7 +76,13 @@ block content
                     input#teamId(type="text", placeholder="team id", name="teamid")
 
                     select(name="position")
-                        - repeation = [ 'Defenders', 'Midfielders', 'Attackers', 'GK', 'RWB', 'RB', 'CB', 'LB', 'LWB', 'CDM', 'RM', 'CM', 'LM', 'CAM', 'RF', 'CF', 'LF', 'ST', 'RW', 'LW'], 
+                        - repeation = [ 'GK', 'RWB', 'RB', 'CB', 'LB', 'LWB', 'CDM', 'RM', 'CM', 'LM', 'CAM', 'RF', 'CF', 'LF', 'ST', 'RW', 'LW'], 
+                        option(value='') Any
+                        each item in repeation
+                            option(value=item) #{item}
+                            
+                    select(name="zone")
+                        - repeation = [ 'defence', 'midfield', 'attacker'], 
                         option(value='') Any
                         each item in repeation
                             option(value=item) #{item}

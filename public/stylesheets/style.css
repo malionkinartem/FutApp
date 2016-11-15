@@ -9,9 +9,9 @@ a {
   display: table;
 }
 .table .header > div {
-  display: table-column;
+  display: table-cell;
   font-wieght: bold;
 }
 .table .body > div {
-  display: table-column;
+  display: table-cell;
 }
