@@ -17,7 +17,7 @@ futservice.requestLogin = function (code) {
 
     //malionkin.artem89@gmail.com
     //artemochka2007@mail.ru
-    this.futClient.login("artemochka2007@mail.ru", "Cool1989", "gerrard", "ps4",
+    this.futClient.login("coinsup87@bk.ru", "Asdfg99Asdfg", "gerrard", "ps4",
         twoFactorCodeCb,
         function (error, response) {
             if (error) {
@@ -93,7 +93,6 @@ futservice.getWatchList = function (callback) {
     // this.futClient.getWatchlist(function(error, response){ 
     //     callback(response);
     // });
-
     this.continueProcess = false;
     callback();
     console.log('watch list');
@@ -109,6 +108,59 @@ futservice.processcriteria = function (data) {
         }, 1000);
     }
     self.findplayer(data, callback);
+}
+
+futservice.relistToSale = function(){
+    var self = this;
+    self.getAllExpired(self.sendAllToSale);
+}
+
+futservice.getAllExpired = function(callback){
+    var self = this;
+    //self.futClient.relist(function(error, response){ 
+        var arr = new Array();
+        //if(error==null){
+            self.futClient.getTradepile(function(error, response){ 
+            if(error == null){
+                response.auctionInfo.forEach(function(item){
+                    if(item.tradeState != null && item.tradeState.toLowerCase() == "expired"/*"active"*/){
+                        arr.push(item);
+                        }
+                    })
+                }
+                callback(self, arr);
+            });
+        //}
+    //});
+}
+
+futservice.sendAllToSale = function(self, listOfTransfers){
+    listOfTransfers.forEach(function(transferItem){
+        var startingBid = transferItem.startingBid;//self.getStartingBid(transferItem);
+        var buyNowPrice = transferItem.buyNowPrice;//self.getByNowPrice(transferItem);
+        self.futClient.listItem(transferItem.itemData.id, startingBid, buyNowPrice, 3600, function(error, response){ 
+            if(error == null){console.log(transferItem.itemData.itemType + ' '+transferItem.itemData.id+' was send to sale');}
+            else{console.log(transferItem.itemData.itemType + ' '+transferItem.itemData.id+' Error: '+ error);}
+        });
+    })
+}
+
+futservice.getStartingBid = function(itemData){
+    if(itemData.startingBid != 150){
+        return itemData.startingBid;
+    } else{
+        //to be implemented
+        return 10000;
+    }
+}
+
+futservice.getByNowPrice = function(itemData){
+    if(itemData.startingBid != 150){
+        return itemData.buyNowPrice;
+    } else{
+        //to be implemented
+        return 20000;
+    }
 }
 
 module.exports = futservice;

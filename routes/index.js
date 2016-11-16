@@ -37,18 +37,6 @@ router.get('/', function (req, res) {
   });
 });
 
-router.get('/about', function (req, res) {
-  res.render('about', {
-    title: 'About'
-  });
-});
-
-router.get('/contact', function (req, res) {
-  res.render('contact', {
-    title: 'Contact'
-  });
-});
-
 router.post('/login', function (req, res) {
   var passCode = req.body.passcode;
 
@@ -95,6 +83,15 @@ router.post('/getWatchList', function (req, res) {
     res.render('index', {
       title: 'Home',
       data: watchList
+    });
+  });
+});
+
+router.post('/relistToSale', function (req, res) {
+  futService.relistToSale(function (expiredTransfer) {
+    res.render('index', {
+      title: 'Home',
+      data: expiredTransfer
     });
   });
 });
