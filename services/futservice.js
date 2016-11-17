@@ -54,7 +54,8 @@ futservice.findplayer = function (data, callback) {
         maxb: data.maxbuy,
         micr: data.minprice,
         macr: data.maxprice,
-        pos: data.position
+        pos: data.position,
+        zone: data.zone
     };
 
     var self = this;
@@ -112,11 +113,3 @@ futservice.processcriteria = function (data) {
 }
 
 module.exports = futservice;
-
-    // this.futClient.getTradepile(function(error, response){ 
-    //     var responseK = response;
-    // });
-
-    // this.futClient.getWatchlist(function(error, response){ 
-    //     var responseK = response;
-    // });

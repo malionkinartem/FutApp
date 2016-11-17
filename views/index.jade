@@ -42,7 +42,13 @@ block content
               option(value='') Any
               each item in repeation
                 option(value=item) #{item}
-            
+
+            select(name="zone")
+              - repeation = [ 'defence', 'midfield', 'attacker'], 
+              option(value='') Any
+              each item in repeation
+                option(value=item) #{item}    
+
             
 
 
