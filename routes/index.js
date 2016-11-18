@@ -2,6 +2,8 @@ var express = require('express');
 var fut = require('fut-api');
 var router = express.Router();
 var futService = require('../services/futservice');
+var priceCalculationService = require('../services/price-calculation');
+
 // var mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost:27017');
 
@@ -118,6 +120,18 @@ router.post('/processcriteria', function (req, res) {
   res.render('index', {
     title: 'Home'
   });
+});
+
+router.post('/test', function (req, res) {
+  var items = [
+    { maxPrice: 500 }, { maxPrice: 900 }, {maxPrice: 1500}, {maxPrice: 1900}, {maxPrice: 9000}, {maxPrice: 1100} 
+  ]
+
+  var price = priceCalculationService.getSalePrice(items, 600, 10000 );
+  
+  res.render('index', {
+      title: 'Home'
+    });
 });
 
 module.exports = router;

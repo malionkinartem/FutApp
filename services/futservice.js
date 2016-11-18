@@ -16,24 +16,13 @@ futservice.requestLogin = function (code) {
     }
 
     //malionkin.artem89@gmail.com
-    //artemochka2007@mail.ru
-    this.futClient.login("artemochka2007@mail.ru", "Cool1989", "gerrard", "ps4",
+    this.futClient.login("coinsup88@bk.ru", "Asdfg99Asdfg", "gerrard", "ps4",
         twoFactorCodeCb,
         function (error, response) {
             if (error) {
                 return console.log("Unable to login.");
             }
             console.log("logged in.");
-
-            // apiClient.search({type: "player", lev: "gold", pos: "CB"}, 
-            //     function(error, response){ 
-            //     debugger;
-            //     var resp = response;
-            // });
-
-            // apiClient.getWatchlist(function(error, response){ 
-            //     var r = response;
-            // });
         });
 }
 
