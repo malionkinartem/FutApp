@@ -1,4 +1,6 @@
 var fut = require('fut-api');
+var step = require('step');
+var schedule = require('node-schedule');
 
 function FutService() {
     this.futClient = new fut({ saveCookie: true, loadCookieFromSavePath: true, saveCookiePath: "login.txt" });
@@ -25,6 +27,9 @@ futservice.requestLogin = function (code) {
             }
             console.log("logged in.");
 
+            var job = schedule.scheduleJob('0 0 * * * *', function(){
+                self.relistToSale();
+            });
             // apiClient.search({type: "player", lev: "gold", pos: "CB"}, 
             //     function(error, response){ 
             //     debugger;
@@ -136,13 +141,19 @@ futservice.getAllExpired = function(callback){
 
 futservice.sendAllToSale = function(self, listOfTransfers){
     listOfTransfers.forEach(function(transferItem){
-        var startingBid = transferItem.startingBid;//self.getStartingBid(transferItem);
-        var buyNowPrice = transferItem.buyNowPrice;//self.getByNowPrice(transferItem);
+        var sync = true;
+        var startingBid = /*transferItem.startingBid;*/self.getStartingBid(transferItem);
+        var buyNowPrice = /*transferItem.buyNowPrice;*/self.getByNowPrice(transferItem);
         self.futClient.listItem(transferItem.itemData.id, startingBid, buyNowPrice, 3600, function(error, response){ 
             if(error == null){console.log(transferItem.itemData.itemType + ' '+transferItem.itemData.id+' was send to sale');}
             else{console.log(transferItem.itemData.itemType + ' '+transferItem.itemData.id+' Error: '+ error);}
+            sync = false;
         });
+        while(sync) {
+            require('deasync').sleep(5000);
+        }
     })
+    console.log('Sending to sale from TransferList was finished');
 }
 
 futservice.getStartingBid = function(itemData){
@@ -150,7 +161,7 @@ futservice.getStartingBid = function(itemData){
         return itemData.startingBid;
     } else{
         //to be implemented
-        return 10000;
+        return itemData.marketDataMaxPrice;
     }
 }
 
@@ -159,7 +170,7 @@ futservice.getByNowPrice = function(itemData){
         return itemData.buyNowPrice;
     } else{
         //to be implemented
-        return 20000;
+        return itemData.marketDataMaxPrice;
     }
 }
 
