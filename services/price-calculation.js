@@ -33,7 +33,9 @@ module.exports = {
 
                 var minPrice = futApi.calculateNextLowerPrice(minMaxPrice);
 
-                resultPrice = { maxPrice: maxPrice, minPrice: minPrice };
+                minPrice = itemPrice >= minPrice ? futApi.calculateNextHigherPrice(itemPrice + interest) : minPrice;
+
+                resultPrice = { maxPrice: maxPrice, minPrice: minPrice  };
 
                 return true;
             }

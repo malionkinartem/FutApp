@@ -23,8 +23,8 @@ block content
 
           div
             div
-              input(type="checkbox" value=isRare)
-              label Is Rare
+              input(type="checkbox" value=isSpecial)
+              label Special
 
             select(name="level")
               - repeation = [ 'gold', 'silver', 'bronze', 'special']
@@ -44,7 +44,7 @@ block content
                 option(value=item) #{item}
 
             select(name="zone")
-              - repeation = [ 'defence', 'midfield', 'attacker'], 
+              - repeation = [ 'defense', 'midfield', 'attacker'], 
               option(value='') Any
               each item in repeation
                 option(value=item) #{item}    

@@ -15,7 +15,8 @@ function ConfigurationCrud() {
         teamid: String,
         position: String,
         isRare: Boolean,
-        zone: String
+        zone: String,
+        buynowprice: String
     });
 
     this.saveConfiguration = function(data, callback){
@@ -30,7 +31,7 @@ function ConfigurationCrud() {
                 league: data.league,
                 teamid: data.teamid,
                 position: data.position,
-                maxbuy: data.maxbuy,
+                buynowprice: data.buynowprice,
                 zone: data.zone
             }
         );
@@ -74,7 +75,7 @@ configurationcrud.add = function(data, callback){
 }
 
 configurationcrud.getAll = function(callback){
-        var self = this;
+    var self = this;
     if(db._hasOpened){
         self.find(undefined, callback);
     }
