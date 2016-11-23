@@ -23,8 +23,8 @@ block content
 
           div
             div
-              input(type="checkbox" value=isRare)
-              label Is Rare
+              input(type="checkbox" value=isSpecial)
+              label Special
 
             select(name="level")
               - repeation = [ 'gold', 'silver', 'bronze', 'special']
@@ -33,7 +33,7 @@ block content
                 option(value=item) #{item}
 
             select(name="league")
-              - repeation = [ {text: 'Any', value: ''}, {text: 'Premier League', value: '13'}, {text: 'Bundesliga', value: '19'}]
+              - repeation = [ {text: 'Any', value: ''}, {text: 'Premier League', value: '13'}, {text: 'Bundesliga', value: '19'}, {text: 'League 1', value: '16'}]
               each item in repeation
                 option(value=item.value) #{item.text}
 
@@ -44,7 +44,7 @@ block content
                 option(value=item) #{item}
 
             select(name="zone")
-              - repeation = [ 'defence', 'midfield', 'attacker'], 
+              - repeation = [ 'defense', 'midfield', 'attacker'], 
               option(value='') Any
               each item in repeation
                 option(value=item) #{item}    
@@ -58,6 +58,10 @@ block content
       form#watchList(name="player", method="post", action="getWatchList")
         button#btnSubmit(type="submit") get watch list
 
-      h1 Test Action
-      form#testAction(method="post", action="test")
-        button#btnSubmit(type="submit") Test Action
+      h1 Start Processing
+      form#testAction(method="post", action="startprocessing")
+        button#btnSubmit(type="submit") Start Processing
+
+      h1 Stop processing
+      form#stopProcessingAction(method="post", action="stopprocessing")
+        button#btnSubmit(type="submit") Stop Processing

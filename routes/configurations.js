@@ -18,7 +18,7 @@ router.get('/', function(req, res) {
 router.post('/add', function(req, res) {
 
   var data = {
-    maxbuy: req.body.maxbuy,
+    buynowprice: req.body.buynowprice,
     level: req.body.level,
     minprice: req.body.minprice,
     maxprice: req.body.maxprice,

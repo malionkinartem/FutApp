@@ -1,35 +1,13 @@
 var express = require('express');
 var fut = require('fut-api');
 var router = express.Router();
-var futService = require('../services/futservice');
+var FutService = require('../services/futservice');
+var futService = new FutService(); 
+
 var priceCalculationService = require('../services/price-calculation');
+var processorService = require('../services/processor');
 
-// var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost:27017');
-
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-//   // we're connected!
-
-//   var kittySchema = mongoose.Schema({
-//     name: String
-//   });
-
-//   var Kitten = mongoose.model('Kitten', kittySchema);
-
-//   var fluffy = new Kitten({ name: 'fluffy' });
-
-//   fluffy.save(function (err, fluffy) {
-//   if (err) return console.error(err);
-
-//   });
-
-//   Kitten.find(function (err, kittens) {
-//   if (err) return console.error(err);
-//     console.log(kittens);
-//   })
-// });
+var agentsKeeper = require('../services/agents-keeper');
 
 router.get('/', function (req, res) {
   // futService.requestLogin();
@@ -39,21 +17,9 @@ router.get('/', function (req, res) {
   });
 });
 
-router.get('/about', function (req, res) {
-  res.render('about', {
-    title: 'About'
-  });
-});
-
-router.get('/contact', function (req, res) {
-  res.render('contact', {
-    title: 'Contact'
-  });
-});
 
 router.post('/login', function (req, res) {
   var passCode = req.body.passcode;
-
   futService.requestLogin(passCode);
 
   res.render('index', {
@@ -68,26 +34,6 @@ router.post('/getCredits', function (req, res) {
     res.render('index', {
       title: 'Home',
       credits: credits
-    });
-  });
-});
-
-router.post('/getPlayer', function (req, res) {
-  var data = {
-    maxbuy: req.body.maxbuy,
-    level: req.body.level,
-    minprice: req.body.minprice,
-    maxprice: req.body.maxprice,
-    league: req.body.league,
-    playerid: req.body.playerid,
-    position: req.body.position,
-    isRare: req.body.isRare ? 'CR' : ''
-  };
-
-  futService.findplayer(data, function () {
-    res.render('index', {
-      title: 'Home',
-      maxbuy: req.body.maxbuy
     });
   });
 });
@@ -111,8 +57,8 @@ router.post('/processcriteria', function (req, res) {
     league: req.body.league,
     playerid: req.body.playerid,
     position: req.body.position,
-    isRare: req.body.isRare ? 'CR' : '',
-    data: req.body.zone
+    isSpecial: req.body.isSpecial ? 'SP' : '',
+    zone: req.body.zone
   };
 
   futService.processcriteria(data);
@@ -122,16 +68,22 @@ router.post('/processcriteria', function (req, res) {
   });
 });
 
-router.post('/test', function (req, res) {
-  var items = [
-    { maxPrice: 500 }, { maxPrice: 900 }, {maxPrice: 1500}, {maxPrice: 1900}, {maxPrice: 9000}, {maxPrice: 1100} 
-  ]
-
-  var price = priceCalculationService.getSalePrice(items, 600, 10000 );
+router.post('/startprocessing', function (req, res) {
   
+  processorService.processBuyNow()
+
   res.render('index', {
       title: 'Home'
     });
 });
 
-module.exports = router;
+router.post('/stopprocessing', function (req, res) {
+  
+  agentsKeeper.disableAll()
+
+  res.render('index', {
+      title: 'Home'
+    });
+});
+
+module.exports = router;      
