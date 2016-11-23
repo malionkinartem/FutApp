@@ -1,31 +1,28 @@
 var fut = require('fut-api');
-var agentsKeeper = require('../services/agents-keeper');
 
-//futagent
-var furService = function () {
-    this.futClient = new fut({ saveCookie: true, loadCookieFromSavePath: true, saveCookiePath: "coinsup88@bk.ru" });
-    this.continueProcess = true;
+var furService = function (loginId) {
+    this.loginId = loginId;
 
-    this.requestLogin = function (code) {
+    this.futClient = new fut({ saveCookie: true, loadCookieFromSavePath: true, saveCookiePath: this.loginId });
+
+    this.requestLogin = function (data, callback) {
         var self = this;
-        this.LoginCode = code;
-
-        var id = "coinsup88@bk.ru";
-        agentsKeeper.addAgent({ Id: id, client: this });
+        this.LoginCode = data.code;        
 
         function twoFactorCodeCb(next) {
             next(self.LoginCode);
         }
 
-        //malionkin.artem89@gmail.com
-        this.futClient.login(id, "Asdfg99Asdfg", "gerrard", "ps4",
+        this.futClient.login(data.loginId, data.password, data.secretKey, data.platform,
             twoFactorCodeCb,
             function (error, response) {
                 if (error) {
-                    return console.log("Unable to login.");
+                    console.log("Unable to login. " + self.loginId);
+                    callback(false);
+                    return;
                 }
-                console.log("logged in.");
-                agentsKeeper.loginAgent(id);
+                console.log("Logged in. " + self.loginId);
+                callback(true);                
             });
     }
 

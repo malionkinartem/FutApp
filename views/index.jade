@@ -3,6 +3,7 @@ extends layout
 block content
   div
       form#formAddUser(name="login", method="post", action="login")
+        input#intPassCode(type="text", placeholder="login Id", name="loginid")
         input#intPassCode(type="text", placeholder="login pass code", name="passcode")
         button#btnSubmit(type="submit") login
 
@@ -11,48 +12,8 @@ block content
       //- form#getCredits(name="credits", method="post", action="getCredits")
       //-   button#btnSubmit(type="submit") get credits
 
-      section
-        h1 Process Players
-        form#getCredits(name="player", method="post", action="processcriteria")
-          div
-            input#playerid(type="text", placeholder="player id", name="playerid" value=playerid)
-          div
-            input#minprice(type="text", placeholder="min price", name="minprice" value=minprice)
-            input#maxprice(type="text", placeholder="max price", name="maxprice" value=maxprice)
-            input#maxbuyprice(type="text", placeholder="max buy price", name="maxbuy" value=maxbuy)
-
-          div
-            div
-              input(type="checkbox" value=isSpecial)
-              label Special
-
-            select(name="level")
-              - repeation = [ 'gold', 'silver', 'bronze', 'special']
-              option(value='') Any
-              each item in repeation
-                option(value=item) #{item}
-
-            select(name="league")
-              - repeation = [ {text: 'Any', value: ''}, {text: 'Premier League', value: '13'}, {text: 'Bundesliga', value: '19'}, {text: 'League 1', value: '16'}]
-              each item in repeation
-                option(value=item.value) #{item.text}
-
-            select(name="position")
-              - repeation = [ 'Defenders', 'Midfielders', 'Attackers', 'GK', 'RWB', 'RB', 'CB', 'LB', 'LWB', 'CDM', 'RM', 'CM', 'LM', 'CAM', 'RF', 'CF', 'LF', 'ST', 'RW', 'LW'], 
-              option(value='') Any
-              each item in repeation
-                option(value=item) #{item}
-
-            select(name="zone")
-              - repeation = [ 'defense', 'midfield', 'attacker'], 
-              option(value='') Any
-              each item in repeation
-                option(value=item) #{item}    
-
-            
-
-
-          button#btnSubmit(type="submit") get player
+      form#formLoginAll(name="loginAll", method="post", action="loginAll")
+        button#btnSubmit(type="submit") login All
 
       h1 Watch List       
       form#watchList(name="player", method="post", action="getWatchList")

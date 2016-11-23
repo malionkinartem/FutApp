@@ -1,19 +1,27 @@
 module.exports = {
-    process: function (action, count, minDelay, maxDelay) {
+    process: function (action, count, minDelay, maxDelay, finishCallback) {
         var index = 1;
-        var callback = function () {
-            index++;
-            var timeout = Math.floor(Math.random() * (maxDelay - minDelay)) + minDelay;
+        var repeatFunction = function (continueProcessing) {
 
-            setTimeout(function () {
+            if (continueProcessing !== false) {
 
-                if (count === undefined || index < count) {
-                    action(callback);
-                }
-                
-            }, timeout);
+                index++;
+                var timeout = Math.floor(Math.random() * (maxDelay - minDelay)) + minDelay;
+
+                setTimeout(function () {
+
+                    if (count === undefined || index < count) {
+                        action(repeatFunction);
+                    }
+                    else
+                    {
+                        finishCallback();
+                    }
+
+                }, timeout);
+            }
         }
 
-        action(callback);
+        action(repeatFunction);
     }
 }
