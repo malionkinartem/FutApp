@@ -5,6 +5,8 @@ var iterator = require('../services/utils/iteration-processor');
 
 
 var priceCalculation = require('../services/price-calculation')
+var configurationIndex = 0;
+
 
 module.exports = {
     processBuyNow: function (clients) {
@@ -27,8 +29,7 @@ module.exports = {
 
     searchConfigurationsProcessor: function (configurations, agent) {
         var self = this;
-
-        var configurationIndex = 0;
+        
         var oneMinute = 60000;
         var minTimeoutInMinutes = 10 * oneMinute;
         var maxTimeoutInMinutes = 20 * oneMinute;
@@ -73,7 +74,7 @@ module.exports = {
                 },
                 function (foundItems) {
                     if (foundItems !== undefined && foundItems.length > 0) {
-                        console.log("item found " + new Date() + " " + agent.id);
+                        console.log("item found " + new Date().toTimeString() + " " + agent.id + " Config Id " + configuration._id.toString());
                         var foundItem = foundItems[0];
                         var buyPrice = itemPrice = foundItem.buyNowPrice;
 
@@ -81,7 +82,7 @@ module.exports = {
                         agent.futClient.buyNow(foundItem.tradeId, buyPrice, this);
                     }
                     else {
-                        console.log("item not found" + new Date() + " " + agent.id);
+                        console.log("item not found" + new Date().toTimeString() + " " + agent.id + " Config Id " + configuration._id.toString());
                     }
                 },
                 function (response) {
