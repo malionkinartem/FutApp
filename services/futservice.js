@@ -13,7 +13,7 @@ var furService = function (loginId) {
             next(self.LoginCode);
         }
 
-        this.futClient.login(data.loginId, data.password, data.secretKey, data.platform,
+        this.futClient.login(data.id, data.password, data.secretKey, data.platform,
             twoFactorCodeCb,
             function (error, response) {
                 if (error) {

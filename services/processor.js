@@ -124,7 +124,7 @@ module.exports = {
 
             iterationCallback();
 
-        }, 10, minTimeoutInSeconds, maxTimeoutInSeconds,
+        }, 100, minTimeoutInSeconds, maxTimeoutInSeconds,
             function () {
                 callback();
             });
