@@ -29,7 +29,7 @@ function ConfigurationCrud() {
                 minprice: data.minprice,
                 maxprice: data.maxprice,
                 league: data.league,
-                teamid: data.teamid,
+                teamid: data.teamId,
                 position: data.position,
                 buynowprice: data.buynowprice,
                 zone: data.zone

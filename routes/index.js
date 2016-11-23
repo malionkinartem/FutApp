@@ -7,6 +7,8 @@ var futService = new FutService();
 var priceCalculationService = require('../services/price-calculation');
 var processorService = require('../services/processor');
 
+var agentsKeeper = require('../services/agents-keeper');
+
 router.get('/', function (req, res) {
   // futService.requestLogin();
 
@@ -66,9 +68,18 @@ router.post('/processcriteria', function (req, res) {
   });
 });
 
-router.post('/test', function (req, res) {
+router.post('/startprocessing', function (req, res) {
   
   processorService.processBuyNow()
+
+  res.render('index', {
+      title: 'Home'
+    });
+});
+
+router.post('/stopprocessing', function (req, res) {
+  
+  agentsKeeper.disableAll()
 
   res.render('index', {
       title: 'Home'

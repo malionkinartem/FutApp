@@ -36,7 +36,7 @@ module.exports = {
 
         iterator.process(function () {
             var updatedAgent = agentsKeeper.getAgent(agent.Id);
-            if (updatedAgent.loggedIn) {
+            if (updatedAgent.loggedIn && updatedAgent.enabled) {
                 self.processConfiguration(configurations[configurationIndex], agent);
 
                 if (configurations.length - 1 > configurationIndex) {
@@ -69,10 +69,15 @@ module.exports = {
                     },
                     function (foundItems) {
                         if (foundItems !== undefined && foundItems.length > 0) {
+                            console.log("item found" + new Date());
                             var foundItem = foundItems[0];
                             var buyPrice = itemPrice = foundItem.buyNowPrice;
+
                             // TODO: create price service method to get price tyoe based on appropriate processing
                             agent.futClient.buyNow(foundItem.tradeId, buyPrice, this);
+                        }
+                        else{
+                            console.log("item not found" + new Date());
                         }
                     },
                     function (response) {
