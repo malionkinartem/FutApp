@@ -24,6 +24,8 @@ block content
                         span Team
                     div(class="col-xs-1")
                         span Position
+                    div(class="col-xs-1")
+                        span Enabled
 
                 each item in configurations
                     div(class="row")
@@ -44,7 +46,9 @@ block content
                         div(class="col-xs-1")
                             span #{item.teamid}
                         div(class="col-xs-1")
-                            span #{item.position}            
+                            span #{item.position}     
+                        div(class="col-xs-1")
+                            span #{item.enabled}         
             
         div
             h1 Add Configuration
@@ -69,7 +73,7 @@ block content
                             option(value=item) #{item}
 
                     select(name="league")
-                        - repeation = [ {text: 'Any', value: ''}, {text: 'Premier League', value: '13'}, {text: 'Bundesliga', value: '19'}, {text: 'League 1', value: '16'}]
+                        - repeation = [ {text: 'Any', value: ''}, {text: 'Premier League', value: '13'}, {text: 'Bundesliga', value: '19'}, {text: 'League 1', value: '16'}, {text: 'Eredivisie', value: '10'},{text: 'MLS', value: '39'},{text: 'Primeira Division', value: '353'}]
                         each item in repeation
                             option(value=item.value) #{item.text}
 

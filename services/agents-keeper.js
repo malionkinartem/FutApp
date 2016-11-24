@@ -9,14 +9,16 @@ agents = [
     platform: "ps4",
     secretkey: "gerrard",
     client: new FutService("coinsup87@bk.ru")
-},
+}
+,
 {
     id: "coinsup88@bk.ru",
     password: "Asdfg99Asdfg",
     platform: "ps4",
     secretkey: "gerrard",
     client: new FutService("coinsup88@bk.ru")
-}];
+}
+];
 
 module.exports = {
     getAllAgents: function () {
