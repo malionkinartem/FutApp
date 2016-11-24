@@ -45,7 +45,9 @@ var furService = function (loginId) {
             macr: data.maxprice,
             pos: data.position,
             zone: data.zone,
-            rare: data.isSpecial
+            rare: data.isSpecial,
+            team: data.teamid,
+            nat: data.nationid
         };
 
         var props = Object.getOwnPropertyNames(options);
@@ -98,7 +100,9 @@ var furService = function (loginId) {
             macr: data.maxprice,
             pos: data.position,
             zone: data.zone,
-            rare: data.isSpecial
+            rare: data.isSpecial,
+            team: data.teamid,        
+            nat: data.nationid
         };
 
         var props = Object.getOwnPropertyNames(options);
@@ -111,12 +115,12 @@ var furService = function (loginId) {
         this.futClient.search(options, function (error, response) {
             var responseK = response;
 
-            if (response.code == '460') {
-                callback();
-            }
-
             if (response.auctionInfo !== undefined) {
                 callback(response.auctionInfo);
+            }
+
+            if(response.code !== undefined){
+                callback(response);
             }
         });
     }

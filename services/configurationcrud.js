@@ -16,7 +16,9 @@ function ConfigurationCrud() {
         position: String,
         isRare: Boolean,
         zone: String,
-        buynowprice: String
+        buynowprice: String,
+        enabled: Boolean,
+        nationid: String
     });
 
     this.saveConfiguration = function(data, callback){
@@ -32,7 +34,9 @@ function ConfigurationCrud() {
                 teamid: data.teamId,
                 position: data.position,
                 buynowprice: data.buynowprice,
-                zone: data.zone
+                zone: data.zone,
+                enabled: true,
+                nationid: data.nationid
             }
         );
 
