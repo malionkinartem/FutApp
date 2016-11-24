@@ -5,7 +5,7 @@ var iterator = require('../services/utils/iteration-processor');
 
 
 var priceCalculation = require('../services/price-calculation')
-var configurationIndex = 3;
+var configurationIndex = 0;
 
 
 module.exports = {
@@ -89,7 +89,7 @@ module.exports = {
                 },
                 function (response) {
                     if (response.success) {
-                        console.log("item was bought.");
+                        console.log("item was bought for " + itemPrice);
                         itemTypeId = response.item.itemData.assetId;
                         itemId = response.item.itemData.id;
 
@@ -126,7 +126,7 @@ module.exports = {
                     agent.client.listItem(itemId, price.minPrice, price.maxPrice, this);
                 },
                 function (response) {
-                    console.log('item was sent to sale.')
+                    console.log('item was sent to sale')
                 }
             )
 
