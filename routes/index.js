@@ -5,6 +5,8 @@ var processorService = require('../services/processor');
 var agentsKeeper = require('../services/agents-keeper');
 var loginService = require('../services/login-service');
 
+var iterationProcessor = require('../services/utils/iteration-processor');
+
 router.get('/', function (req, res) {
   // futService.requestLogin();
 
@@ -14,7 +16,7 @@ router.get('/', function (req, res) {
 });
 
 
-router.post('/login', function (req, res) {  
+router.post('/login', function (req, res) {
 
   var data = {
     loginId: req.body.loginid,
@@ -28,7 +30,7 @@ router.post('/login', function (req, res) {
   });
 });
 
-router.post('/loginAll', function (req, res) {  
+router.post('/loginAll', function (req, res) {
 
   loginService.loginAll();
 
@@ -79,22 +81,41 @@ router.post('/loginAll', function (req, res) {
 // });
 
 router.post('/startprocessing', function (req, res) {
-  
+
+  var agents = agentsKeeper.loggedInAgents();
+
+  iterationProcessor.process(function (iterationCallback) {
+
+    agents.forEach(function (agent) {
+      
+      agent.client.getCredits(function(funds){
+        console.log("Credits " + funds + " for " + agent.id);
+      });
+    });
+
+    iterationCallback();
+
+  }, undefined, 8 * 60000, 9 * 60000,
+    function () { });
+
   agentsKeeper.enableAll();
-  processorService.processBuyNow();  
+  processorService.processBuyNow();
 
   res.render('index', {
-      title: 'Home'
-    });
+    title: 'Home'
+  });
 });
 
 router.post('/stopprocessing', function (req, res) {
-  
+
   agentsKeeper.disableAll();
+  var agents = agentsKeeper.loggedInAgents();
+  agents[0].client.getCredits();
+
 
   res.render('index', {
-      title: 'Home'
-    });
+    title: 'Home'
+  });
 });
 
 module.exports = router;      
