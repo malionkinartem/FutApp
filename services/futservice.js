@@ -32,61 +32,6 @@ var furService = function (loginId) {
         });
     }
 
-    this.findplayerold = function (data, callback) {
-        // maskedDefId = assetId  is player id
-
-        var options = {
-            type: "player",
-            leag: data.league,
-            lev: data.level,
-            maskedDefId: data.playerid,
-            maxb: data.maxbuy,
-            micr: data.minprice,
-            macr: data.maxprice,
-            pos: data.position,
-            zone: data.zone,
-            rare: data.isSpecial,
-            team: data.teamid,
-            nat: data.nationid
-        };
-
-        var props = Object.getOwnPropertyNames(options);
-        props.forEach(function (prop) {
-            if (!options[prop]) {
-                delete options[prop];
-            }
-        })
-
-        var self = this;
-        this.futClient.search(options, function (error, response) {
-            var responseK = response;
-
-            if (response.code == '460') {
-                callback();
-                return;
-            }
-
-            console.log('players count: ' + response.auctionInfo.length);
-
-            if (response.auctionInfo !== undefined) {
-                var item = response.auctionInfo[0];
-
-                if (item !== undefined) {
-
-                    console.log('Current bid: ' + item.currentBid);
-                    self.futClient.placeBid(item.tradeId, data.maxbuy, function (error, response) {
-                        if (error == null) {
-                            console.log('player was bought.')
-                        }
-                    });
-
-                }
-            }
-
-            callback();
-        });
-    }
-
     this.findplayer = function (data, callback) {
         // maskedDefId = assetId  is player id
 
@@ -121,7 +66,7 @@ var furService = function (loginId) {
 
             if(response.code !== undefined){
                 callback(response);
-            }
+            } 
         });
     }
 
@@ -133,18 +78,6 @@ var furService = function (loginId) {
         this.continueProcess = false;
         callback();
         console.log('watch list');
-    }
-
-    this.processcriteria = function (data) {
-        var self = this;
-        var callback = function () {
-            setTimeout(function () {
-                if (self.continueProcess) {
-                    self.findplayerold(data, callback);
-                }
-            }, 1000);
-        }
-        self.findplayerold(data, callback);
     }
 
     this.buyNow = function (tradeId, price, callback) {
