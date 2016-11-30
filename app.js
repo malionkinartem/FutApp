@@ -59,5 +59,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// Authentication initialization
+app.use(passport.initialize())  
+app.use(passport.session())  
+
 
 module.exports = app;
