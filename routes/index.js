@@ -1,3 +1,5 @@
+var passport = require('passport');
+
 var express = require('express');
 var router = express.Router();
 
@@ -16,7 +18,7 @@ router.get('/', function (req, res) {
 });
 
 
-router.post('/login', function (req, res) {
+router.post('/loginAgent', function (req, res) {
 
   var data = {
     loginId: req.body.loginid,
@@ -39,47 +41,6 @@ router.post('/loginAll', function (req, res) {
   });
 });
 
-
-// router.post('/getCredits', function (req, res) {
-
-//   futService.getCredits(function (credits) {
-//     res.render('index', {
-//       title: 'Home',
-//       credits: credits
-//     });
-//   });
-// });
-
-// router.post('/getWatchList', function (req, res) {
-//   futService.getWatchList(function (watchList) {
-//     res.render('index', {
-//       title: 'Home',
-//       data: watchList
-//     });
-//   });
-// });
-
-// router.post('/processcriteria', function (req, res) {
-
-//   var data = {
-//     maxbuy: req.body.maxbuy,
-//     level: req.body.level,
-//     minprice: req.body.minprice,
-//     maxprice: req.body.maxprice,
-//     league: req.body.league,
-//     playerid: req.body.playerid,
-//     position: req.body.position,
-//     isSpecial: req.body.isSpecial ? 'SP' : '',
-//     zone: req.body.zone
-//   };
-
-//   futService.processcriteria(data);
-
-//   res.render('index', {
-//     title: 'Home'
-//   });
-// });
-
 router.post('/startprocessing', function (req, res) {
 
   var agents = agentsKeeper.loggedInAgents();
@@ -87,8 +48,8 @@ router.post('/startprocessing', function (req, res) {
   iterationProcessor.process(function (iterationCallback) {
 
     agents.forEach(function (agent) {
-      
-      agent.client.getCredits(function(funds){
+
+      agent.client.getCredits(function (funds) {
         console.log("Credits " + funds + " for " + agent.id);
       });
     });
@@ -117,5 +78,6 @@ router.post('/stopprocessing', function (req, res) {
     title: 'Home'
   });
 });
+
 
 module.exports = router;      
